@@ -6,6 +6,12 @@ pipeline {
         }
     }
     stages {
+        stage('Clone') { 
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/test']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/ido83/simple-java-maven-app.git']]])
+               // sh 'mvn -B -DskipTests clean package' 
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
